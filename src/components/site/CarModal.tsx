@@ -7,7 +7,7 @@ const today = () => new Date().toISOString().slice(0, 10);
 
 export function CarModal({ car, onClose }: { car: Car | null; onClose: () => void }) {
   const [f, setF] = useState({ name: "", email: "", pickup: "", ret: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<"location"|"pickup"|"ret"|"name"|"email"|"phone"|"message", string>>>({});
   const [done, setDone] = useState(false);
 
   useEffect(() => { setDone(false); setErrors({}); setF({ name: "", email: "", pickup: "", ret: "" }); }, [car]);
@@ -16,7 +16,7 @@ export function CarModal({ car, onClose }: { car: Car | null; onClose: () => voi
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    const er: Record<string, string> = {};
+    const er: Partial<Record<"location"|"pickup"|"ret"|"name"|"email"|"phone"|"message", string>> = {};
     if (f.name.trim().length < 2) er.name = "Enter your full name";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) er.email = "Enter a valid email";
     if (!f.pickup) er.pickup = "Choose a pickup date";
@@ -27,7 +27,7 @@ export function CarModal({ car, onClose }: { car: Car | null; onClose: () => voi
     if (!Object.keys(er).length) setDone(true);
   };
 
-  const err = (k: string) => errors[k] && <p role="alert" className="mt-1 text-xs text-destructive">{errors[k]}</p>;
+  const err = (k: "location"|"pickup"|"ret"|"name"|"email"|"phone"|"message") => errors[k] && <p role="alert" className="mt-1 text-xs text-destructive">{errors[k]}</p>;
 
   return (
     <Dialog open={!!car} onOpenChange={(o) => !o && onClose()}>

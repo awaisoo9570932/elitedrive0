@@ -7,12 +7,12 @@ const today = () => new Date().toISOString().slice(0, 10);
 
 export function QuickBooking({ onView, favorites, toggleFav }: { onView: (c: Car) => void; favorites: Set<string>; toggleFav: (id: string) => void }) {
   const [f, setF] = useState({ location: "", pickup: "", ret: "", category: "All Cars" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<"location"|"pickup"|"ret"|"name"|"email"|"phone"|"message", string>>>({});
   const [results, setResults] = useState<Car[] | null>(null);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    const er: Record<string, string> = {};
+    const er: Partial<Record<"location"|"pickup"|"ret"|"name"|"email"|"phone"|"message", string>> = {};
     if (!f.location) er.location = "Choose a pickup location";
     if (!f.pickup) er.pickup = "Choose a pickup date";
     else if (f.pickup < today()) er.pickup = "Pickup can't be in the past";
@@ -25,7 +25,7 @@ export function QuickBooking({ onView, favorites, toggleFav }: { onView: (c: Car
   };
 
   const label = "mb-1.5 block text-xs font-semibold uppercase tracking-widest text-muted-foreground";
-  const err = (k: string) => errors[k] && <p role="alert" className="mt-1 text-xs text-destructive">{errors[k]}</p>;
+  const err = (k: "location"|"pickup"|"ret"|"name"|"email"|"phone"|"message") => errors[k] && <p role="alert" className="mt-1 text-xs text-destructive">{errors[k]}</p>;
 
   return (
     <section id="booking" aria-label="Quick booking" className="relative z-10 mx-auto -mt-36 max-w-7xl px-5 lg:px-8">

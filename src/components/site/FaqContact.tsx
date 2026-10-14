@@ -26,12 +26,12 @@ export function FAQ() {
 export function Contact() {
   const empty = { name: "", email: "", phone: "", vehicle: "", message: "" };
   const [f, setF] = useState(empty);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<"location"|"pickup"|"ret"|"name"|"email"|"phone"|"message", string>>>({});
   const [sent, setSent] = useState(false);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    const er: Record<string, string> = {};
+    const er: Partial<Record<"location"|"pickup"|"ret"|"name"|"email"|"phone"|"message", string>> = {};
     if (f.name.trim().length < 2) er.name = "Enter your name";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) er.email = "Enter a valid email";
     if (f.phone && !/^[+\d\s()-]{6,20}$/.test(f.phone)) er.phone = "Enter a valid phone number";
@@ -39,7 +39,7 @@ export function Contact() {
     setErrors(er);
     if (!Object.keys(er).length) { setSent(true); setF(empty); }
   };
-  const err = (k: string) => errors[k] && <p role="alert" className="mt-1 text-xs text-destructive">{errors[k]}</p>;
+  const err = (k: "location"|"pickup"|"ret"|"name"|"email"|"phone"|"message") => errors[k] && <p role="alert" className="mt-1 text-xs text-destructive">{errors[k]}</p>;
   const lbl = "mb-1.5 block text-xs font-semibold uppercase tracking-widest text-muted-foreground";
 
   return (
