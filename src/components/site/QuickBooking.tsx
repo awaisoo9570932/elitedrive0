@@ -29,7 +29,7 @@ export function QuickBooking({ onView, favorites, toggleFav }: { onView: (c: Car
 
   return (
     <section id="booking" aria-label="Quick booking" className="relative z-10 mx-auto -mt-36 max-w-7xl px-5 lg:px-8">
-      <form noValidate onSubmit={submit} className="grid gap-4 rounded-2xl border border-border bg-card/95 p-5 shadow-elegant backdrop-blur-md sm:grid-cols-2 sm:p-7 lg:grid-cols-5 lg:items-start">
+      <form noValidate onSubmit={submit} className="grid gap-4 rounded-2xl border border-border bg-card/95 p-5 shadow-elegant backdrop-blur-md sm:grid-cols-2 sm:p-7 lg:grid-cols-[repeat(4,minmax(0,1fr))_auto] lg:items-start">
         <div>
           <label htmlFor="qb-loc" className={label}>Pickup location</label>
           <select id="qb-loc" className="field" value={f.location} onChange={(e) => setF({ ...f, location: e.target.value })} aria-invalid={!!errors.location}>
@@ -55,7 +55,7 @@ export function QuickBooking({ onView, favorites, toggleFav }: { onView: (c: Car
           </select>
         </div>
         <div className="sm:col-span-2 lg:col-span-1 lg:pt-[1.6rem]">
-          <button type="submit" className="btn-gold w-full"><Search size={16} /> Search Available Cars</button>
+          <button type="submit" className="btn-gold w-full whitespace-nowrap"><Search size={16} /> Search Available Cars</button>
         </div>
       </form>
 
